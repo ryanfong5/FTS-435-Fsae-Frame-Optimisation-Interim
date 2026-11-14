@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>FTS-435 · Optimisation of the R27e FSAE Frame</title>
+<title>FTS-435 : Design &amp; Optimization of the Frame system for FSAE</title>
 <meta name="description" content="FTS-435 interim report: redesigning the NUS Formula SAE R27e frame to pass inspection, keep water out, improve access and cut 2.44 kg of frame mass.">
 <meta name="author" content="Fong Ken Khai, Wong Yi Tung Shanice">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#C8102E">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FTS-435 · Optimisation of the R27e FSAE Frame">
+<meta property="og:title" content="FTS-435 : Design &amp; Optimization of the Frame system for FSAE">
 <meta property="og:description" content="FTS-435 interim report: redesigning the NUS Formula SAE R27e frame to pass inspection, keep water out, improve access and cut 2.44 kg of frame mass.">
 <meta property="og:url" content="https://ryanfong5.github.io/FTS-435-Fsae-Frame-Optimisation-Interim/">
 <meta property="og:image" content="https://ryanfong5.github.io/FTS-435-Fsae-Frame-Optimisation-Interim/assets/images/social-card.jpg">
@@ -88,7 +88,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.1;text-wrap:
 h1{font-size:var(--step-4);margin:.2em 0 .3em}
 h2{font-size:var(--step-3);margin:0 0 .4em;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 h2 .rub{font-family:var(--f-mono);font-size:.8rem;font-weight:500;color:var(--accent);border:1px solid currentColor;border-radius:4px;padding:1px 6px;letter-spacing:.04em}
-h3{font-size:var(--step-2);margin:2.2em 0 .5em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h3{font-size:var(--step-2);margin:2.6em 0 .5em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 h3{scroll-margin-top:72px}
 h4{font-size:var(--step-0);font-weight:600;margin:1.6em 0 .4em}
 p{margin:0 0 1em}
@@ -98,7 +98,8 @@ ul.tight li,ol.tight li{margin:.25em 0}
 .eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
 .num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 strong.k{color:var(--accent);font-weight:600;white-space:nowrap}
-section.part{padding-top:56px;margin-top:56px;border-top:1px solid var(--rule);scroll-margin-top:72px}
+section.part{--secpad:clamp(40px,5vw,56px);padding-top:var(--secpad);margin-top:clamp(80px,11vw,128px);border-top:1px solid var(--ink-3);scroll-margin-top:72px}
+section.part:not(:first-of-type)::before{content:"";display:block;width:120px;height:4px;background:var(--accent);margin:calc(-1 * var(--secpad) - 2.5px) 0 calc(var(--secpad) - 1.5px)}
 section.part:first-of-type{border-top:0;margin-top:0;padding-top:0}
 
 /* owner tags */
@@ -120,8 +121,7 @@ section.part:first-of-type{border-top:0;margin-top:0;padding-top:0}
 .masthead .lead{color:#CDD2DA;margin:0}
 .masthead .num7{position:absolute;right:20%;bottom:-28px;font-family:var(--f-display);font-weight:700;font-size:clamp(7rem,16vw,12rem);line-height:1;color:rgba(255,255,255,.06);z-index:0;max-width:none;pointer-events:none}
 @media (max-width:640px){.masthead{padding:28px 20px 24px}.masthead > *{max-width:100%}.masthead::after{right:-6px;opacity:.5}.masthead .num7{right:8%}}
-section.part > h2{position:relative;padding-top:18px}
-section.part > h2::before{content:"";position:absolute;top:0;left:0;width:58px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) 0 40px,transparent 40px 46px,var(--accent) 46px 58px)}
+section.part > h2{position:relative}
 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px 32px;margin:24px 0;padding:18px 0;border-block:1px solid var(--rule);font-size:var(--step--1)}
 .meta div{min-width:0}
 .meta b{display:block;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin-bottom:4px}
@@ -190,9 +190,17 @@ tr.tot td{font-weight:600;background:var(--surface)}
 .keyline .v.acc{color:var(--accent)}
 .keyline .l{font-size:var(--step--1);color:var(--ink-3)}
 .todo{display:inline;font-size:.8125rem;background:var(--todo-bg);color:var(--todo);border:1px solid var(--todo-rule);border-radius:4px;padding:0 6px;white-space:normal}
-.statement{font-family:var(--f-display);font-size:var(--step-2);font-weight:500;line-height:1.25;border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:16px 0 24px;max-width:40ch}
+.statement{position:relative;overflow:hidden;font-family:var(--f-display);font-size:clamp(1.6rem,3.3vw,2.3rem);font-weight:500;line-height:1.2;color:var(--ink);background:var(--surface);border-left:5px solid var(--accent);border-radius:0 12px 12px 0;padding:48px clamp(20px,4vw,40px) 30px clamp(20px,3vw,32px);margin:20px 0 32px;max-width:none;text-wrap:balance}
+.statement::before{content:"R27e frame \00B7  design goal";position:absolute;top:18px;left:clamp(20px,3vw,32px);font-family:var(--f-mono);font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.statement::after{content:"\201D";position:absolute;right:18px;bottom:-.45em;font-size:8rem;line-height:1;color:var(--accent);opacity:.1;pointer-events:none}
+.statement .kw{color:var(--accent);font-weight:600;background:linear-gradient(transparent 82%,var(--accent-soft) 82%)}
 .pill{display:inline-block;font-size:.75rem;font-weight:600;border-radius:999px;padding:1px 9px;white-space:nowrap}
-.pill.ok{background:var(--good-soft);color:var(--good)} .pill.wait{background:var(--surface);color:var(--ink-2);border:1px solid var(--rule)}
+.pill.ok{background:var(--good-soft);color:var(--good)} .pill.no{background:var(--bad-soft);color:var(--bad)}
+.testhead{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;margin-top:40px;padding-top:16px;border-top:1px solid var(--rule)}
+.testhead .tl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent);border-radius:4px;padding:2px 8px}
+.chart.pt{padding:10px}
+.pair figure.chartfig{margin:0}
+.pair>*,.trio>*{min-width:0} .pill.wait{background:var(--surface);color:var(--ink-2);border:1px solid var(--rule)}
 .formula{font-family:var(--f-mono);background:var(--surface);border-radius:8px;padding:12px 16px;overflow-x:auto;font-size:.9rem;margin:12px 0 16px}
 
 /* priority gates */
@@ -324,7 +332,7 @@ details.app[open]{padding-bottom:8px}
   <div class="masthead">
     <div class="num7" aria-hidden="true">R27e</div>
     <div class="eyebrow">CDE4301 Innovation &amp; Design Capstone · Interim report · NUS Formula SAE</div>
-    <h1>FTS-435: Optimisation of the R27e FSAE Frame</h1>
+    <h1>FTS-435 : Design &amp; Optimization of the Frame system for FSAE</h1>
     <p class="lead prose">R26e was built to be light but failed the rain test and never ran the dynamic events. We redesigned the R27e frame to keep water out, open up access and pass inspection first, while still cutting mass.</p>
   </div>
   <div class="meta">
@@ -342,7 +350,7 @@ details.app[open]{padding-bottom:8px}
     <li><span class="k">Rear</span><span class="v">1 shelf</span><p>Built into the monocoque; seals the electronics bay and carries the controller, braces and harness.</p></li>
     <li><span class="k">Main roll hoop</span><span class="v">−1.20 kg</span><p>Moved outside the monocoque, reshaped for helmet clearance, with a carbon head restraint.</p></li>
     <li><span class="k">Mass</span><span class="v">−2.44 kg</span><p>Frame saving; 6.08 kg lighter car including suspension and electronics.</p></li>
-    <li><span class="k">Strength</span><span class="v">30.10 kN</span><p>Reinforced shoulder harness panel meets the 30 kN requirement.</p></li>
+    <li><span class="k">Strength</span><span class="v">30.10 kN</span><p>Reinforced shoulder harness panel sustained the 30 kN requirement (test stopped).</p></li>
   </ul>
 
   <figure class="f wide" style="margin-top:28px">
@@ -379,7 +387,7 @@ details.app[open]{padding-bottom:8px}
       <figcaption><span class="fignum">Figure 4.</span> An inspector checking R26e with the team.</figcaption></figure>
   </div>
   <div class="prose">
-    <p>In the rain test, water is sprayed at the car from every direction for 120 s with the high-voltage system on, and the car is watched for another 120 s. If the insulation monitoring device detects a leak from high voltage to the chassis at any point, the car fails [1].</p>
+    <p>In the rain test, the car is sprayed from all directions for 120 s with high voltage on, then watched for 120 s; any leak to the chassis detected by the insulation monitoring device fails it [1].</p>
   </div>
   <figure class="f"><div class="plate"><img src="assets/images/r26e-rain-test.jpg" alt="R26e on a stand under the rain test spray rig at FSAE Michigan, water falling on the car"></div>
     <figcaption><span class="fignum">Figure 5.</span> R26e in the rain test at FSAE Michigan.</figcaption></figure>
@@ -420,7 +428,7 @@ details.app[open]{padding-bottom:8px}
 
   <h3>1.4 Why mass still matters <span class="who both">Shared</span></h3>
   <div class="prose">
-    <p>Compliance and integration get the car onto the track, but they do not win points on it. FSAE is still a race: dynamic points go to the fastest cars, and the field gets faster every year. A car designed only to meet the rules would fall behind, so mass stays a design goal, cut wherever the first two gates allow.</p>
+    <p>Compliance and integration get the car onto the track but do not win points. Dynamic points go to the fastest cars, and the field gets faster every year, so mass stays a design goal wherever the first two gates allow.</p>
     <p>Lower mass gives faster acceleration (F = ma) and better cornering through lower yaw inertia and quicker weight transfer. The team's lap-time simulation shows the trend:</p>
   </div>
   <p class="tcap"><span class="fignum">Table 3.</span> Car mass against simulated and actual acceleration time.</p>
@@ -454,7 +462,7 @@ details.app[open]{padding-bottom:8px}
   <p class="cap">Status as of 11 Nov 2026; results in 7.1.</p>
 
   <h3>1.6 Design statement</h3>
-  <p class="statement">Design a waterproof, structurally compliant and highly integrated FSAE frame that reduces mass by 1 kg to achieve team goals.</p>
+  <p class="statement">Design a <span class="kw">waterproof</span>, structurally <span class="kw">compliant</span> and highly <span class="kw">integrated</span> FSAE frame that reduces <span class="kw">mass by 1 kg</span> to achieve team goals.</p>
 </section>
 
 <!-- ============ A2 ============ -->
@@ -475,7 +483,7 @@ details.app[open]{padding-bottom:8px}
   </table></div>
 
   <h3 id="s2-1">2.1 Front monocoque shrink <span class="who sw">Wong Yi Tung Shanice</span></h3>
-  <div class="prose"><p>The R26e front monocoque was larger than the rules require. We shrank it from the bottom and sides toward the FSAE internal cross-section template: a 350 mm × 350 mm shape that must pass through the cockpit to prove there is room for the driver's legs [1]. A smaller cross-section means less laminate area, and so less mass.</p></div>
+  <div class="prose"><p>The R26e front monocoque was larger than the rules require. We shrank it from the bottom and sides toward the FSAE internal cross-section template, a 350 × 350 mm shape that must pass through the cockpit [1]. Less cross-section means less laminate and mass.</p></div>
   <div class="pair">
     <figure class="f"><div class="plate"><img src="assets/images/front-r26e-r27e-overlay.jpg" alt="Side view of the R26e front monocoque in grey with the narrower R27e outline overlaid"></div>
       <figcaption><span class="fignum">Figure 8.</span> R26e front (grey) against R27e (transparent).</figcaption></figure>
@@ -483,7 +491,7 @@ details.app[open]{padding-bottom:8px}
       <figcaption><span class="fignum">Figure 9.</span> FSAE internal cross-section template.</figcaption></figure>
   </div>
   <h4>Rollover protection kept</h4>
-  <div class="prose"><p>The rules need straight lines from the top of the main hoop to the top of the front hoop to stay clear of the driver's helmet. Shrinking from the bottom and sides does not lower the front hoop, so these lines and the driver's seating position are unchanged.</p></div>
+  <div class="prose"><p>Shrinking from the bottom and sides does not lower the front hoop, so the rollover lines from the main hoop to the front hoop, and the seating position, are unchanged.</p></div>
   <figure class="f" style="max-width:560px"><div class="plate"><img src="assets/images/front-rollover.jpg" alt="Side view of the R27e monocoque with rollover protection lines drawn from the roll hoops"></div>
     <figcaption><span class="fignum">Figure 10.</span> R27e rollover protection lines.</figcaption></figure>
   <h4>Space for the front wing</h4>
@@ -491,7 +499,7 @@ details.app[open]{padding-bottom:8px}
   <figure class="f" style="max-width:560px"><div class="plate"><img src="assets/images/front-wing.jpg" alt="Isometric view of the R27e front wing under the narrower nose"></div>
     <figcaption><span class="fignum">Figure 11.</span> R27e front wing under the nose.</figcaption></figure>
   <h4>Packaging around the template</h4>
-  <div class="prose"><p>We placed the template in CAD first, then checked that the steering column, pedal box and dashboard fit around it without clashing.</p></div>
+  <div class="prose"><p>The template was placed in CAD first, then the steering column, pedal box and dashboard were checked for clashes.</p></div>
   <div class="pair even">
     <figure class="f"><div class="plate"><img src="assets/images/front-icst-front.jpg" alt="Front view of the template volume in blue with the steering column and front roll hoop around it"></div>
       <figcaption><span class="fignum">Figure 12.</span> Front view: template (blue) and steering.</figcaption></figure>
@@ -507,7 +515,7 @@ details.app[open]{padding-bottom:8px}
   <figure class="f" style="max-width:360px"><div class="plate"><img src="assets/images/front-roll-hoop.jpg" alt="R27e front roll hoop in pink overlaid on the larger R26e hoop in grey"></div>
     <figcaption><span class="fignum">Figure 14.</span> R27e front roll hoop (pink) against R26e (grey).</figcaption></figure>
   <div class="pc"><div class="pro"><h5>Pros</h5><ul><li>Lighter (−171 g)</li><li>Matches the new monocoque shape</li></ul></div>
-    <div class="con"><h5>Cons</h5><ul><li>New bend geometry and new welding jig needed (3.3)</li></ul></div></div>
+    <div class="con"><h5>Cons</h5><ul><li>New bend geometry (3.3)</li><li>Requires a new embedded FRH bonding jig</li></ul></div></div>
 
   <h3 id="s2-3">2.3 Integrated rear monocoque shelf <span class="who kk">Fong Ken Khai</span></h3>
   <div class="prose"><p>We replaced R26e's separate shroud and electronics shelf with one composite shelf laid up as part of the rear monocoque. It does four jobs.</p></div>
@@ -515,14 +523,14 @@ details.app[open]{padding-bottom:8px}
   <div class="prose"><p>A solid surface replaces the taped shroud.</p></div>
   <figure class="f"><div class="viewer3d" role="img" aria-label="Interactive 3D model of the R27e integrated rear shelf" data-src="assets/models/r27e-shelf.glb" style="height:clamp(300px,45vw,440px)"><div class="mv-status">3D model loads when in view</div><button type="button" class="mv-go" hidden>Rotate and zoom</button></div>
       <figcaption><span class="fignum">Figure 15.</span> Integrated shelf (3D model).</figcaption></figure>
-  <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>Far fewer water entry paths</li><li>Permanent seal: no tape or cover to fail</li><li>Leaks can only occur at known pass-throughs</li><li>Cables pass through waterproof Autosport connectors</li></ul></div><div class="con"><h5>Cons</h5><ul><li>Adds 1.13 kg of laminate</li><li>More complex mould and layup</li><li>Underside hidden once electronics are fitted</li></ul></div></div>
+  <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>Far fewer water entry paths</li><li>Fixed composite surface: no tape or cover to fail</li><li>Leaks can only occur at known pass-throughs</li><li>Cables pass through waterproof Autosport connectors</li></ul></div><div class="con"><h5>Cons</h5><ul><li>Adds 1.13 kg of laminate</li><li>More complex mould and layup</li><li>Underside hidden once electronics are fitted</li></ul></div></div>
   <h4 id="job2" style="scroll-margin-top:72px">2. Electronics mounting</h4>
   <div class="prose"><p>The Cascadia motor controller bolts straight on, removing the 1,090 g mounting shelf.</p></div>
   <figure class="f"><div class="plate"><img src="assets/images/ee-shelf-before.jpg" alt="R26e separate carbon shelf for the motor controller, 1,090 g"></div>
     <figcaption><span class="fignum">Figure 16.</span> R26e: separate mounting shelf, 1,090 g.</figcaption></figure>
   <figure class="f"><div class="plate"><img src="assets/images/ee-shelf-after.jpg" alt="Cutaway render of the R27e rear bay with electronics mounted directly on the integrated shelf"></div>
     <figcaption><span class="fignum">Figure 17.</span> R27e: electronics on the shelf (blue), 0 g extra.</figcaption></figure>
-  <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>Controller and electronics easy to reach</li><li>Shorter cable runs</li><li>Stiffer controller mounting</li><li>Enables electrical packaging savings (5.5)</li></ul></div><div class="con"><h5>Cons</h5><ul><li>Damage cannot be fixed by swapping a part</li><li>Controller heat sits on the laminate</li></ul></div></div>
+  <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>Controller and electronics easy to reach</li><li>Shorter cable runs</li><li>Stiffer controller mounting</li><li>Enables electrical packaging savings (5.5)</li></ul></div><div class="con"><h5>Cons</h5><ul><li>Integrated structural shelf is less modular; structural damage may require composite repair rather than simple component replacement</li><li>Silicone-sealed electronics enclosure requires additional effort to access, but remains removable and serviceable</li><li>Controller heat sits on the laminate</li></ul></div></div>
   <h4 id="job3" style="scroll-margin-top:72px">3. Shorter roll hoop braces</h4>
   <div class="prose"><p>The braces land on the shelf instead of the rear corners of the monocoque, so they are shorter.</p></div>
   <figure class="f"><div class="plate"><img src="assets/images/mrh-brace-r26-r27.jpg" alt="R26e and R27e monocoques side by side with the main hoop brace mounting points circled: rear corners on R26e, on the shelf on R27e"></div>
@@ -534,7 +542,7 @@ details.app[open]{padding-bottom:8px}
     <figcaption><span class="fignum">Figure 19.</span> R26e: welded shoulder harness bar (blue), 831.61 g in CAD. Removed on R27e.</figcaption></figure>
   <figure class="f"><div class="plate"><img src="assets/images/shoulder-harness-attach.jpg" alt="Render of the shoulder harness bracket bolted to the blue integrated shelf beside a main hoop brace"></div>
     <figcaption><span class="fignum">Figure 20.</span> Harness bracket bolted to the shelf (blue).</figcaption></figure>
-  <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>Less welding</li><li>Bolts easy to inspect</li></ul></div><div class="con"><h5>Cons</h5><ul><li>Needed a 30 kN proof test (failed twice first)</li><li>Local reinforcement adds mass</li><li>Damaged potted inserts are hard to repair</li><li>More pull tests needed to confirm the result</li></ul></div></div>
+  <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>Less welding</li><li>Bolts easy to inspect</li></ul></div><div class="con"><h5>Cons</h5><ul><li>30 kN proof test needed; unreinforced panel peaked at 17.89 kN</li><li>Local reinforcement adds mass</li><li>Damaged potted inserts are hard to repair</li><li>More pull tests needed to confirm the result</li></ul></div></div>
 
   <h3 id="s2-4">2.4 Main roll hoop redesign <span class="who kk">Fong Ken Khai</span></h3>
   <h4>Moved outside the monocoque</h4>
@@ -544,7 +552,7 @@ details.app[open]{padding-bottom:8px}
   <figure class="f"><div class="plate"><img src="assets/images/mrh-r26e-gaps.jpg" alt="Three photos of R26e: hoop mount blocking electronics and gaps between hoop and monocoque"></div>
     <figcaption><span class="fignum">Figure 22.</span> R26e: hoop mount blocking electronics, and gaps between hoop and monocoque.</figcaption></figure>
   <h4>New shape for helmet clearance</h4>
-  <div class="prose"><p>The rules need at least 50 mm between the helmet and two straight lines: from the top of the main hoop to the top of the front hoop, and to the lower end of the main hoop bracing [1]. Widening the whole single-bend hoop would have added a lot of tube. Instead, the R27e hoop changes shape near the top to clear the helmet. The hoop gains only <span class="num">67.98 g (+2.2%)</span>, going from 3,118.96 g to 3,186.94 g.</p></div>
+  <div class="prose"><p>The rules need at least 50 mm between the helmet and two straight lines: from the top of the main hoop to the top of the front hoop, and to the lower end of the main hoop bracing [1]. Rather than widening the whole hoop, the R27e hoop changes shape near the top, adding only <span class="num">67.98 g (+2.2%)</span> (3,118.96 → 3,186.94 g).</p></div>
   <div class="pair">
     <figure class="f"><div class="plate"><img src="assets/images/helmet-clearance.jpg" alt="Rear view of R26e driver model with helmet close to the hoop"></div>
       <figcaption><span class="fignum">Figure 23.</span> R26e: limited helmet clearance for taller drivers.</figcaption></figure>
@@ -625,7 +633,7 @@ details.app[open]{padding-bottom:8px}
   <figure class="f"><div class="plate"><img src="assets/images/layup-bulkhead-hq.jpg" alt="Rear bulkhead support 4T2UD band on R26e and R27e with measured heights"></div>
     <figcaption><span class="fignum">Figure 36.</span> Rear bulkhead support: shorter 4T2UD band (brown), 1.61 → 1.24 kg.</figcaption></figure>
   <div class="pc"><div class="pro"><h5>Pros</h5><ul><li>About 0.86 kg saved with no change in shape</li><li>Each change is checked in the SES</li></ul></div>
-    <div class="con"><h5>Cons</h5><ul><li>Less spare strength in each zone</li><li>Thinner panels may need physical tests, like the anti-submarine mount panel</li></ul></div></div>
+    <div class="con"><h5>Cons</h5><ul><li>Reduced laminate thickness decreases structural strength margins in affected regions</li><li>Torsional rigidity (TR) and vertical deflection (VD) may become more sensitive to laminate thickness reduction</li><li>The integrated shelf also adds stiffness and may partially offset these reductions; the net effect must be evaluated through simulation and testing (7.3)</li></ul></div></div>
 
 </section>
 
@@ -653,7 +661,7 @@ details.app[open]{padding-bottom:8px}
       <li><b>Area:</b> other mounting holes sit close by on the shelf, so the plate could not simply be made larger.</li>
       <li><b>Thickness:</b> space behind the panel is tight, so the plate could not simply be made thicker.</li>
     </ul>
-    <p>We therefore tried different materials and sizes to find the best fit within both limits. Roark's formula for a circular plate under a central load <i>P</i> gives the thinnest plate that will not yield [8]. Here σ<sub>y</sub> is the plate yield stress, ν is Poisson's ratio, and <i>a</i> and <i>b</i> are the outer and loaded radii:</p>
+    <p>We compared materials and sizes within both limits. Roark's formula for a circular plate under a central load <i>P</i> gives the thinnest plate that will not yield [8]. Here σ<sub>y</sub> is the plate yield stress, ν is Poisson's ratio, and <i>a</i> and <i>b</i> are the outer and loaded radii:</p>
   </div>
   <div class="formula">t = √( 3P / (2π σ<sub>y</sub>) · [ (1 + ν) ln(a / b) + 1 ] )</div>
   <div class="pair">
@@ -680,9 +688,9 @@ details.app[open]{padding-bottom:8px}
   <figure class="f"><div class="plate"><img src="assets/images/mrh-bend-drawing.jpg" alt="Bending drawing for the R27e main roll hoop, 4130 steel 1 inch by 0.095 inch tube"></div>
     <figcaption><span class="fignum">Figure 41.</span> Main roll hoop bending drawing sent to VR3.</figcaption></figure>
   <h4>Welding jig</h4>
-  <div class="prose"><p>A modular welding jig holds both hoops and their braces in their true positions relative to the monocoque while they are welded.</p></div>
-  <figure class="f"><div class="plate"><img src="assets/images/welding-jig-full.jpg" alt="Welding jig on a modular fixture table holding the monocoque buck and both roll hoops"></div>
-    <figcaption><span class="fignum">Figure 42.</span> Welding jig with the monocoque buck and both hoops.</figcaption></figure>
+  <div class="prose"><p>A modular welding jig holds the main roll hoop and braces in position on the monocoque for welding. The front roll hoop is bonded in during layup and needs a separate bonding jig (2.2).</p></div>
+  <figure class="f"><div class="plate"><img src="assets/images/welding-jig-full.jpg" alt="Welding jig on a modular fixture table holding the monocoque buck, main roll hoop and braces"></div>
+    <figcaption><span class="fignum">Figure 42.</span> Welding jig with the monocoque buck, main roll hoop and braces.</figcaption></figure>
 </section>
 
 <!-- ============ A4 ============ -->
@@ -700,70 +708,103 @@ details.app[open]{padding-bottom:8px}
       <li>The test fixture's edges must be at least 125 mm from the load point.</li>
       <li>The shoulder belt load must be applied at the angle set in the rules, not simply straight up.</li>
       <li>The sample cannot be larger than the as-built monocoque section, and its width cannot exceed the shoulder harness panel height listed in the SES.</li>
-    </ul>
-    The intent is that the test panel matches the competition car as closely as possible.</div>
+    </ul></div>
+  <h4>Test setup</h4>
   <div class="prose">
-    <p><b>Setup:</b> composite panel clamped in the custom jig on the UTM and pulled until it failed or the test was stopped, logging force and stroke every 0.01 s. Three tests, one specimen each:</p>
-  </div>
-  <p class="tcap"><span class="fignum">Table 10.</span> Shoulder harness pull test configurations.</p>
-  <div class="tbl"><table>
-    <thead><tr><th>Test</th><th>Panel at the mount</th><th>Attachment and clamping</th><th>Why this change</th><th class="n">Target</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>2T4UD (R27e layup)</td><td>Car attachment hardware, panel clamped less tightly</td><td>First check of the R27e design</td><td class="n">30 kN</td></tr>
-      <tr><td>2</td><td>2T4UD (R27e layup)</td><td>Eyebolt, panel clamped tightly</td><td>Stop the panel slipping and load the panel itself</td><td class="n">30 kN</td></tr>
-      <tr><td>3</td><td>4T8UD locally, extra potting compound</td><td>Panel clamped tightly</td><td>Strengthen the area around the insert</td><td class="n">30 kN</td></tr>
-    </tbody>
-  </table></div>
-  <div class="pair">
-    <figure class="f"><div class="plate"><img src="assets/images/test1-iso.jpg" alt="Test 1: harness webbing and car end fitting bolted to the composite panel, held by side clamp bars on the UTM"></div>
-      <figcaption><span class="fignum">Figure 43.</span> Test 1: car fitting, panel held by side bars.</figcaption></figure>
-    <figure class="f"><div class="plate"><img src="assets/images/test2-setup-photo.jpg" alt="New jig: clamp plate with circular opening over the panel and an eyebolt pulled by the UTM"></div>
-      <figcaption><span class="fignum">Figure 44.</span> Tests 2–3: new clamp plate and eyebolt.</figcaption></figure>
-  </div>
-  <h4>Results</h4>
-  <ol class="steps" aria-label="Pull test progression">
-    <li><span class="t">Test 1</span><span class="kn">14.15 <small>kN</small></span><div class="meter"><i style="width:47%;background:var(--bad)"></i></div><span class="ch">2T4UD panel, loose clamp, car hardware</span><span class="badge no">Panel slipped</span></li>
-    <li><span class="t">Test 2</span><span class="kn">17.89 <small>kN</small></span><div class="meter"><i style="width:60%;background:var(--bad)"></i></div><span class="ch">Tight clamp and eyebolt</span><span class="badge no">Core crushed</span></li>
-    <li><span class="t">Test 3</span><span class="kn">30.10 <small>kN</small></span><div class="meter"><i style="width:100%;background:var(--good)"></i></div><span class="ch">Local 4T8UD and extra potting</span><span class="badge ok">30 kN met</span></li>
-  </ol>
-  <figure class="f chartfig">
-  <div class="legend"><span><i style="background:var(--series-up)"></i>Test 1 · 2T4UD, loose clamp</span><span><i style="background:var(--series-ee)"></i>Test 2 · 2T4UD, tight clamp + eyebolt</span><span><i style="background:var(--accent)"></i>Test 3 · 4T8UD + potting</span></div>
-  <div class="chart" id="pullChart" role="img" aria-label="Force against machine stroke for three pull tests. Test 1 peaks at 14.15 kN, test 2 at 17.89 kN, test 3 reaches 30.10 kN, above the 30 kN requirement"></div>
-    <figcaption><span class="fignum">Figure 45.</span> Shoulder harness pull tests 1–3. Force against stroke from the raw UTM data. Dashed line: 30 kN requirement.</figcaption></figure>
-  <div class="keyline">
-    <div><div class="v">14.15 kN</div><div class="l">Test 1 peak</div></div>
-    <div><div class="v">17.89 kN</div><div class="l">Test 2 peak<br>+26% on Test 1</div></div>
-    <div><div class="v acc">30.10 kN</div><div class="l">Test 3, test stopped<br>+68% on Test 2</div></div>
-  </div>
-  <div class="prose">
-    <p>The chart plots force against how far the machine has moved. A steady rise means the panel is carrying load; a sudden drop means something has slipped, cracked or crushed.</p>
-    <h4>What the curves show</h4>
-    <ul class="tight">
-      <li><b>Test 1:</b> force levelled off at 12–13 kN and crept to 14.15 kN, suggesting the panel slipped in the loose clamp.</li>
-      <li><b>Test 2:</b> force rose steadily to 17.89 kN at 18.3 mm, then fell in steps as the core crushed.</li>
-      <li><b>Test 3:</b> force reached 24.6 kN, dropped to 12.6 kN, then recovered and climbed to 30.10 kN, where the test was stopped.</li>
-    </ul>
-    <h4>What this means</h4>
-    <ul class="tight">
-      <li>The reinforced design meets the 30 kN requirement. The 2T4UD panel, not the jig, was the weak point.</li>
-      <li>In Tests 2 and 3 the insert held. Both panels bent up into the jig opening and the core crushed near the clamped edges. Thicker local skins and extra potting raised that failure from 17.89 kN to above 30 kN.</li>
-    </ul>
-    <h4>Why the reinforcement worked</h4>
-    <ul class="tight">
-      <li><b>Thicker skins make a stiffer panel.</b> A sandwich panel's bending stiffness rises with the thickness of its skins, because the skins carry the bending load and the core only holds them apart. Going from 2T4UD to 4T8UD roughly doubles the skin, so the panel bends less at the same load and passes less of it into the core. Failure-mode studies of honeycomb sandwich beams show that thicker skins move failure to a higher load [11].</li>
-      <li><b>More potting spreads the load.</b> Potting turns the honeycomb around the insert into a solid plug, so the pull is shared over a wider area of both skins. Research on potted inserts shows that a larger potted area raises both stiffness and failure load, and moves damage away from the core and skins [12][13].</li>
-      <li><b>The clamp edge is the weak spot.</b> The tight clamp acts as a rigid edge. Bending and core shear are highest exactly where the free panel meets the clamp, which is where the core crushed in both tests. Stiffer skins lower the peak there, so the core lasted longer.</li>
-    </ul>
+    <p>Each panel was clamped in the custom jig on the UTM and pulled at the harness attachment, logging force and stroke every 0.01 s; one specimen per configuration. Machine stroke includes jig and machine compliance, so it is not true panel deflection.</p>
   </div>
   <figure class="f"><div class="plate"><video src="assets/video/pull-test-timelapse.mp4" poster="assets/images/pull-test-timelapse-poster.jpg" controls muted playsinline loop preload="metadata" aria-label="Time-lapse of a shoulder harness pull test: the panel bows up into the jig opening as the load rises"></video></div>
-    <figcaption><span class="fignum">Figure 46.</span> Pull test time-lapse at 50× speed: the panel bows up into the jig opening as load rises.</figcaption></figure>
-  <div class="trio">
+    <figcaption><span class="fignum">Figure 43.</span> Pull test time-lapse at 50× speed: the panel bows up into the jig opening as load rises.</figcaption></figure>
+
+  <h4 id="s4-1a" class="testhead"><span class="tl">Test 1</span> Original 2T4UD panel, initial clamping</h4>
+  <div class="keyline">
+    <div><div class="v">2T4UD</div><div class="l">Layup (R27e design)</div></div>
+    <div><div class="v">Car fitting</div><div class="l">Attachment</div></div>
+    <div><div class="v">Initial</div><div class="l">Clamping: side bars,<br>less restrictive</div></div>
+    <div><div class="v">14.15 kN</div><div class="l">Peak load<br>30 kN not met</div></div>
+  </div>
+  <div class="prose">
+    <p><b>Objective:</b> first check of the R27e layup with the car's end fitting.</p>
+    <ul class="tight">
+      <li><b>Observed:</b> a 12–13 kN plateau, then a slow rise to a 14.15 kN peak.</li>
+      <li><b>Interpretation:</b> the plateau suggests the panel slipped in the loose clamp, though the curve alone cannot confirm it. The clamping had to change before the panel itself could be assessed.</li>
+    </ul>
+  </div>
+  <figure class="f chartfig"><div class="chart pt" id="pt1" role="img" aria-label="Test 1 force against machine stroke: plateau at 12 to 13 kN, peak 14.15 kN"></div>
+    <figcaption><span class="fignum">Figure 44.</span> Test 1: force against machine stroke. Dashed line: 30 kN requirement.</figcaption></figure>
+  <div class="pair">
+    <figure class="f"><div class="plate"><img src="assets/images/test1-iso.jpg" alt="Test 1: harness webbing and car end fitting bolted to the composite panel, held by side clamp bars on the UTM"></div>
+      <figcaption><span class="fignum">Figure 45.</span> Test 1 setup: car end fitting, panel held by side clamp bars.</figcaption></figure>
+    <figure class="f"><div class="plate"><img src="assets/images/test1-front.jpg" alt="Test 1 front view: harness webbing gripped in the UTM belt grip above the panel"></div>
+      <figcaption><span class="fignum">Figure 46.</span> Test 1, front view: harness webbing held in the UTM belt grip.</figcaption></figure>
+  </div>
+
+  <h4 id="s4-1b" class="testhead"><span class="tl">Test 2</span> Original 2T4UD panel, revised clamping</h4>
+  <div class="keyline">
+    <div><div class="v">2T4UD</div><div class="l">Layup, same nominal<br>laminate as Test 1</div></div>
+    <div><div class="v">Eyebolt</div><div class="l">Attachment</div></div>
+    <div><div class="v">Revised</div><div class="l">Clamping: plate with<br>circular opening, tight</div></div>
+    <div><div class="v">17.89 kN</div><div class="l">Peak load<br>30 kN not met</div></div>
+  </div>
+  <div class="prose">
+    <p><b>Objective:</b> remove slip so the load passes into the panel.</p>
+    <ul class="tight">
+      <li><b>Observed:</b> a steady rise to 17.89 kN at 18.3 mm, then stepped drops. The panel bent up into the jig opening and the core crushed at both clamped edges. The insert and eyebolt stayed attached, with no visible pull-out.</li>
+      <li><b>Interpretation:</b> the stepped drops are consistent with progressive core crushing at the clamp edges.</li>
+    </ul>
+  </div>
+  <figure class="f chartfig"><div class="chart pt" id="pt2" role="img" aria-label="Test 2 force against machine stroke: steady rise to 17.89 kN at 18.3 mm, then stepped drops"></div>
+    <figcaption><span class="fignum">Figure 47.</span> Test 2: force against machine stroke. Dashed line: 30 kN requirement.</figcaption></figure>
+  <div class="pair">
     <figure class="f"><div class="plate"><img src="assets/images/test2-after-top.jpg" alt="Test 2 panel after the test: eyebolt still attached, panel bent up into the jig opening between the clamp bars"></div>
-      <figcaption><span class="fignum">Figure 47.</span> Test 2: insert held; panel bent into the opening.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 48.</span> Test 2 after testing: insert and eyebolt attached; panel bent up into the jig opening.</figcaption></figure>
     <figure class="f"><div class="plate"><img src="assets/images/test2-after-side.jpg" alt="Side view of the test 2 panel showing the backing plate in place and crushed honeycomb core at both clamped edges"></div>
-      <figcaption><span class="fignum">Figure 48.</span> Test 2, side: core crushed at both clamped edges.</figcaption></figure>
-    <figure class="f"><div class="plate"><img src="assets/images/test3-after.jpg" alt="Reinforced test 3 panel after the test, bent upward into the jig opening with the eyebolt still in place and the honeycomb core visible at the cut edge"></div>
-      <figcaption><span class="fignum">Figure 49.</span> Test 3 after 30.10 kN: same mode, at higher load.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 49.</span> Test 2, side view: honeycomb core crushed at both clamped edges.</figcaption></figure>
+  </div>
+
+  <h4 id="s4-1c" class="testhead"><span class="tl">Test 3</span> Reinforced 4T8UD panel with additional potting</h4>
+  <div class="keyline">
+    <div><div class="v">4T8UD</div><div class="l">Local layup at the mount</div></div>
+    <div><div class="v">+ Potting</div><div class="l">Additional potting<br>around the insert</div></div>
+    <div><div class="v">Revised</div><div class="l">Clamping and eyebolt<br>as Test 2</div></div>
+    <div><div class="v acc">30.10 kN</div><div class="l">Test stopped at target<br>30 kN met</div></div>
+  </div>
+  <div class="prose">
+    <p><b>Objective:</b> resist bending and core crushing up to 30 kN.</p>
+    <ul class="tight">
+      <li><b>Observed:</b> force reached 24.6 kN, dropped to 12.6 kN at about 6 mm, then recovered to 30.10 kN, where the test was stopped. The panel bent up into the jig opening. The core did not crush, but the potting compound eventually separated from the carbon skin.</li>
+      <li><b>Interpretation:</b> the panel sustained the required load without catastrophic failure. The cause of the drop is not identified, and the ultimate failure load was not measured.</li>
+    </ul>
+  </div>
+  <figure class="f chartfig"><div class="chart pt" id="pt3" role="img" aria-label="Test 3 force against machine stroke: rise to 24.6 kN, sudden drop to 12.6 kN, recovery to 30.10 kN where the test was stopped"></div>
+    <figcaption><span class="fignum">Figure 50.</span> Test 3: force against machine stroke. Dashed line: 30 kN requirement.</figcaption></figure>
+  <figure class="f"><div class="plate"><img src="assets/images/test3-after.jpg" alt="Reinforced test 3 panel after the test, bent upward into the jig opening with the eyebolt still in place and the honeycomb core visible at the cut edge"></div>
+    <figcaption><span class="fignum">Figure 51.</span> Test 3 after reaching 30.10 kN: panel bent up into the jig opening, eyebolt in place; core not crushed.</figcaption></figure>
+
+  <h4 id="s4-1d" class="testhead"><span class="tl">Comparison</span> Analysis and conclusions</h4>
+  <p class="tcap"><span class="fignum">Table 10.</span> Shoulder harness pull tests compared.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Parameter</th><th>Test 1</th><th>Test 2</th><th>Test 3</th></tr></thead>
+    <tbody>
+      <tr><td>Layup at the mount</td><td>2T4UD</td><td>2T4UD</td><td>4T8UD</td></tr>
+      <tr><td>Attachment</td><td>Car end fitting</td><td>Eyebolt</td><td>Eyebolt</td></tr>
+      <tr><td>Clamping</td><td>Initial</td><td>Revised</td><td>Revised</td></tr>
+      <tr><td>Local reinforcement</td><td>Original potting</td><td>Original potting</td><td>Additional potting</td></tr>
+      <tr><td>Maximum load</td><td class="n">14.15 kN</td><td class="n">17.89 kN</td><td class="n">≥ 30.10 kN (test stopped)</td></tr>
+      <tr><td>30 kN requirement</td><td><span class="pill no">Not met</span></td><td><span class="pill no">Not met</span></td><td><span class="pill ok">Met</span></td></tr>
+    </tbody>
+  </table></div>
+  <figure class="f chartfig">
+  <div class="legend"><span><i style="background:var(--series-up)"></i>Test 1 · 2T4UD, initial clamping</span><span><i style="background:var(--series-ee)"></i>Test 2 · 2T4UD, revised clamping</span><span><i style="background:var(--accent)"></i>Test 3 · 4T8UD + potting</span></div>
+  <div class="chart" id="pullChart" role="img" aria-label="Force against machine stroke for three pull tests. Test 1 peaks at 14.15 kN, test 2 at 17.89 kN, test 3 reaches 30.10 kN, where the test was stopped"></div>
+    <figcaption><span class="fignum">Figure 52.</span> Shoulder harness pull tests 1–3. All three tests overlaid, from the raw UTM data. Dashed line: 30 kN requirement.</figcaption></figure>
+  <div class="prose">
+    <ol class="tight">
+      <li><b>Clamping influence.</b> With the same nominal laminate, the peak rose 26% (14.15 → 17.89 kN) when clamping and attachment changed. Boundary conditions affect measured capacity, so these are fixture results, not material strengths.</li>
+      <li><b>Laminate reinforcement.</b> Test 3 sustained at least 68% more than Test 2. Skins and potting changed together, so the gain cannot be assigned to either alone. Thicker skins raise bending stiffness, passing less load into the core [11]; more potting spreads the pull over both skins [12][13].</li>
+      <li><b>Failure mechanisms.</b> Observed: bending into the jig opening (Tests 2–3), core crushing at the clamped edges (Test 2), potting–skin separation (Test 3), no visible insert pull-out. Inferred: bending and core shear peak at the rigid clamp edge; thicker skins in Test 3 protected the core, moving the critical location to the potting–skin bond.</li>
+      <li><b>Conclusion.</b> The reinforced configuration sustained 30 kN under the tested conditions, supporting its use for the shoulder harness mount.</li>
+    </ol>
   </div>
 
   <h3>4.2 Honeycomb core comparison <span class="who both">Shared</span></h3>
@@ -777,15 +818,15 @@ details.app[open]{padding-bottom:8px}
   </div>
   <div class="pair">
     <figure class="f"><div class="plate"><img src="assets/images/core-punch-setup.jpg" alt="Punch shear test: steel punch pressing on a sandwich panel on a ring support under a 50 kN Shimadzu load cell"></div>
-      <figcaption><span class="fignum">Figure 50.</span> Punch shear test on the 50 kN UTM.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 53.</span> Punch shear test on the 50 kN UTM.</figcaption></figure>
     <figure class="f"><div class="plate"><img src="assets/images/core-3pb-setup.jpg" alt="Three-point bending test: sandwich panel on two round supports with the loading nose pressing the centre; the top skin has wrinkled under the nose"></div>
-      <figcaption><span class="fignum">Figure 51.</span> Three-point bending: top skin wrinkled under the loading nose.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 54.</span> Three-point bending: top skin wrinkled under the loading nose.</figcaption></figure>
   </div>
   <h4>Results</h4>
   <figure class="f chartfig">
   <div class="legend"><span><i style="background:var(--r26)"></i>Corex (current core)</span><span><i style="background:var(--accent)"></i>Huarui core (alternative)</span></div>
   <div class="chart" id="coreChart" role="img" aria-label="Peak load by core and layup. Punch shear: 2T1UD Corex 4.46 vs new 4.63 kN, 2T2UD 7.39 vs 7.33, 2T4UD 12.76 vs 12.93. Three-point bending: 2T1UD 4.00 vs 4.69, 2T4UD 5.32 vs 5.60"></div>
-    <figcaption><span class="fignum">Figure 52.</span> Corex against Huarui honeycomb core. Peak load (kN) for matched panels, one specimen each. The Corex 2T1UD punch peak came late (about 24 mm stroke) after an earlier 4.28 kN peak. Full curves are in Appendix E.</figcaption></figure>
+    <figcaption><span class="fignum">Figure 55.</span> Corex against Huarui honeycomb core. Peak load (kN) for matched panels, one specimen each. The Corex 2T1UD punch peak came late (about 24 mm stroke) after an earlier 4.28 kN peak. Full curves are in Appendix E.</figcaption></figure>
   <div class="verdict" aria-label="Huarui core against Corex"><span>Strength</span><span>Cost</span><span>Lead time</span><span>Availability</span></div>
   <div class="prose">
     <ul class="tight">
@@ -795,7 +836,7 @@ details.app[open]{padding-bottom:8px}
         <ul class="tight">
           <li><b>Equal or better strength:</b> within 4% in punch shear and 5–17% higher in bending, across all layups tested.</li>
           <li><b>Lower cost:</b> cheaper per sheet, with cheaper shipping to Singapore.</li>
-          <li><b>Shorter lead time:</b> 15 days from order, with regional shipping to Singapore.</li>
+          <li><b>Shorter lead time:</b> 15 days from order.</li>
           <li><b>Better availability:</b> a wide range of cell sizes, foil gauges and thicknesses made to order.</li>
         </ul></li>
     </ul>
@@ -807,11 +848,11 @@ details.app[open]{padding-bottom:8px}
     <li><b>Pull-test jig FEA:</b> stress in the jig at 30 kN, to locate critical areas before machining.</li>
   </ul></div>
   <figure class="f" style="max-width:520px"><div class="plate"><img src="assets/images/head-restraint-fea.jpg" alt="FEA stress plot of the carbon head restraint"></div>
-    <figcaption><span class="fignum">Figure 53.</span> Head restraint FEA (maximum principal stress).</figcaption></figure>
+    <figcaption><span class="fignum">Figure 56.</span> Head restraint FEA (maximum principal stress).</figcaption></figure>
   <h4>Validating the composite model</h4>
   <div class="prose"><p>We rebuilt the three-point bending test from 4.2 in Ansys Composite PrepPost (ACP) to compare it with the measured results. Once the two agree, the same laminate data can be trusted in future simulations of the full monocoque, such as torsional rigidity.</p></div>
   <figure class="f"><div class="plate"><img src="assets/images/acp-3pb-fea.jpg" alt="Ansys static structural result of the three-point bending panel coloured by vertical deformation, with a maximum downward deflection of 5.0 mm at the loading nose"></div>
-    <figcaption><span class="fignum">Figure 54.</span> ACP model of the three-point bending test: vertical deformation (mm).</figcaption></figure>
+    <figcaption><span class="fignum">Figure 57.</span> ACP model of the three-point bending test: vertical deformation (mm).</figcaption></figure>
 </section>
 
 <!-- ============ A5 ============ -->
@@ -867,7 +908,7 @@ details.app[open]{padding-bottom:8px}
     <div class="mtag" style="left:36.7%;top:4.1%">Main roll hoop + braces<b>−1,198 g</b></div>
     <div class="mtag" style="right:1%;top:48.8%">Rear monocoque<br>+ shelf<b>−77 g</b></div>
     <div class="mtot">Frame total<b>−2.44 kg</b>−10% vs R26e</div>
-  </div></div><figcaption><span class="fignum">Figure 55.</span> Where the frame mass was saved, R27e against R26e.</figcaption></figure>
+  </div></div><figcaption><span class="fignum">Figure 58.</span> Where the frame mass was saved, R27e against R26e.</figcaption></figure>
   <div class="keyline">
     <div><div class="v acc">−2.44 kg</div><div class="l">Frame only (−10.0%)<br>Goal: −1 kg</div></div>
     <div><div class="v">+0.43 kg</div><div class="l">Front suspension<br>(knock-on)</div></div>
@@ -877,7 +918,7 @@ details.app[open]{padding-bottom:8px}
   <figure class="f chartfig">
   <div class="legend"><span><i style="background:var(--accent)"></i>Frame change (this project)</span><span><i style="background:var(--series-up)"></i>Mass added elsewhere</span><span><i style="background:var(--series-ee)"></i>Electronics saving enabled by the frame</span><span><i style="background:var(--ink)"></i>Running total</span></div>
   <div class="chart" id="bridgeChart" role="img" aria-label="Bridge chart of mass change from R26e to R27e: front monocoque minus 0.99 kg, front roll hoop minus 0.17, rear monocoque and shelf minus 0.08, main roll hoop minus 1.20, frame subtotal minus 2.44; front suspension plus 0.43; electronics minus 4.08; overall minus 6.08 kilograms"></div>
-    <figcaption><span class="fignum">Figure 56.</span> Where the mass went, by area. Mass change from R26e to R27e (kg).</figcaption></figure>
+    <figcaption><span class="fignum">Figure 59.</span> Where the mass went, by area. Mass change from R26e to R27e (kg).</figcaption></figure>
   <div class="prose"><p>The electronics saving is the electrical team's work, but the shelf is what makes it possible, so it is shown separately from the frame figure. The frame alone more than doubles its 1 kg goal. With the suspension gain and the electronics savings it enables, the car is 6.08 kg lighter, beating the 5 kg chassis goal.</p></div>
 
   <h3 id="s5-5">5.5 What the new monocoque enables <span class="who both">Shared</span></h3>
@@ -889,7 +930,7 @@ details.app[open]{padding-bottom:8px}
     <div><div class="v">≈ −2.6 kg</div><div class="l">Harness mass<br>(estimated)</div></div>
   </div>
   <figure class="f"><div class="plate"><img src="assets/images/harness-5-to-1.jpg" alt="R26e rear electronics with five cross-car harnesses next to R27e with one"></div>
-    <figcaption><span class="fignum">Figure 57.</span> Cross-car harnesses: five on R26e, one on R27e.</figcaption></figure>
+    <figcaption><span class="fignum">Figure 60.</span> Cross-car harnesses: five on R26e, one on R27e.</figcaption></figure>
   <div class="prose"><p>Harness mass is scaled from R26e (8.68 kg) by length, giving 6.07 kg.</p></div>
 </section>
 
@@ -899,60 +940,60 @@ details.app[open]{padding-bottom:8px}
   <div class="prose"><p>The narrower front and the integrated shelf mean the R26e mould no longer fits. We first explored modifying it, then compared it with two new moulds.</p></div>
 
   <h3>6.1 Modifying the R26e mould <span class="who both">Shared</span></h3>
-  <div class="prose"><p>The first option considered was to adapt the existing R26e mould rather than build a new one. Two changes would have been needed.</p></div>
+  <div class="prose"><p>We first considered adapting the R26e mould, which needed two changes.</p></div>
   <h4>Narrowing the front with PU inserts</h4>
   <div class="prose"><p>Polyurethane (PU) foam inserts would be machined and fixed inside the old mould to form the narrower R27e front. The inserts follow compound curves, which are difficult to machine accurately, and their thin edges are prone to damage during layup.</p></div>
   <div class="pair">
     <figure class="f"><div class="plate"><img src="assets/images/mould-pu-insert-cad.jpg" alt="CAD model of a PU insert shaped to the narrower R27e front"></div>
-      <figcaption><span class="fignum">Figure 58.</span> PU insert designed for the narrower front.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 61.</span> PU insert designed for the narrower front.</figcaption></figure>
     <figure class="f"><div class="plate"><img src="assets/images/mould-pu-milling.jpg" alt="CNC router machining a pink PU foam block"></div>
-      <figcaption><span class="fignum">Figure 59.</span> Machining a PU block on the CNC router.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 62.</span> Machining a PU block on the CNC router.</figcaption></figure>
   </div>
   <h4>Adding the shelf by secondary bonding</h4>
   <div class="prose"><p>The R26e mould has no shelf, so the shelf would be moulded as a separate part and bonded to the cured monocoque. Because the bonded joint becomes part of the primary structure, the SES judges require tensile tests to prove that it is at least as strong as the parent laminate, on both the inner and outer skins (Appendix F).</p></div>
   <div class="trio">
     <figure class="f"><div class="plate"><img src="assets/images/mould-mono-noshelf.jpg" alt="Monocoque CAD without the shelf, as made in the R26e mould"></div>
-      <figcaption><span class="fignum">Figure 60.</span> Monocoque as made in the old mould.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 63.</span> Monocoque as made in the old mould.</figcaption></figure>
     <figure class="f"><div class="plate"><img src="assets/images/mould-shelf-part.jpg" alt="CAD of the shelf as a separate moulded part"></div>
-      <figcaption><span class="fignum">Figure 61.</span> Shelf moulded separately.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 64.</span> Shelf moulded separately.</figcaption></figure>
     <figure class="f"><div class="plate"><img src="assets/images/mould-shelf-bonded.jpg" alt="CAD of the shelf bonded onto the rear monocoque"></div>
-      <figcaption><span class="fignum">Figure 62.</span> Shelf bonded onto the monocoque.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 65.</span> Shelf bonded onto the monocoque.</figcaption></figure>
   </div>
   <h4>Outcome</h4>
-  <div class="prose"><p>Together, the inserts and the bonding qualification made this route complex and costly: extra machining, extra parts, a separate test programme, and the risk of a weak joint in the main structure. A shelf moulded in one piece with the monocoque has no bonded joint and avoids all of this. We therefore looked at building a new mould, compared in 6.2.</p></div>
+  <div class="prose"><p>The inserts and bonding qualification made this route complex and costly: extra machining, extra parts, a separate test programme and a bonded joint in the primary structure. A shelf moulded in one piece avoids all of this, so new moulds were compared in 6.2.</p></div>
 
   <h3>6.2 Building a new mould <span class="who both">Shared</span></h3>
-  <div class="prose"><p>Two ways of building a new mould were compared. Both produce the full R27e shape, including the shelf, in one piece.</p></div>
+  <div class="prose"><p>Two options were compared; both produce the full R27e shape, including the shelf, in one piece.</p></div>
 
   <div class="optgrid">
   <div class="opt">
   <h4>Option A: Carbon fibre mould from a machined plug</h4>
-  <div class="prose"><p>A full-size plug of the monocoque is machined from PU tooling board. A carbon fibre mould is then laid up over the plug, cured and removed. This is the conventional route for composite tooling.</p></div>
+  <div class="prose"><p>A full-size plug is machined from PU tooling board, then a carbon fibre mould is laid up over it, cured and removed: the conventional route for composite tooling.</p></div>
   <div class="pair">
     <figure class="f"><div class="plate"><img src="assets/images/mould-cf-plug-cad.jpg" alt="CAD of the full-size R27e monocoque plug"></div>
-      <figcaption><span class="fignum">Figure 63.</span> Plug CAD for the R27e monocoque.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 66.</span> Plug CAD for the R27e monocoque.</figcaption></figure>
     <figure class="f"><div class="plate"><img src="assets/images/mould-cf-photo.jpg" alt="Two halves of a laid-up composite monocoque mould"></div>
-      <figcaption><span class="fignum">Figure 64.</span> A two-piece composite mould made from a plug.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 67.</span> A two-piece composite mould made from a plug.</figcaption></figure>
   </div>
   <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>High stiffness, so the mould holds its shape under vacuum</li><li>Expands at a similar rate to the carbon part during cure</li><li>Smooth surface finish and reliable vacuum seal</li><li>Long tool life over many layups</li></ul></div><div class="con"><h5>Cons</h5><ul><li>Two stages (plug, then mould), so a long lead time [5]</li><li>A large block of tooling board is machined away</li><li>High material and labour cost</li><li>Any later change to the shape needs a new plug and mould</li></ul></div></div>
   </div>
   <div class="opt sel">
   <h4>Option B: 3D-printed mould <span class="badge ok">Selected</span></h4>
-  <div class="prose"><p>The mould is printed directly in RTP 385, a polycarbonate filled with 30% carbon fibre [3]. It is too large to print in one go, so it is split into four sections, printed, bonded together and then machined to the final surface. The carbon fibre filler makes the printed polymer stiffer and more stable than plain plastic.</p></div>
+  <div class="prose"><p>The mould is printed in RTP 385, a polycarbonate with 30% carbon fibre that is stiffer and more stable than plain plastic [3]. It is printed in four sections, bonded and machined to the final surface.</p></div>
   <div class="pair">
     <figure class="f"><div class="plate"><img src="assets/images/mould-3dp-sections.jpg" alt="CAD of the R27e mould split into printed sections"></div>
-      <figcaption><span class="fignum">Figure 65.</span> Mould split into printable sections.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 68.</span> Mould split into printable sections.</figcaption></figure>
     <figure class="f"><div class="plate"><img src="assets/images/mould-opt3-rtp.jpg" alt="Hand holding black RTP 385 pellets over a foil-lined bag"></div>
-      <figcaption><span class="fignum">Figure 66.</span> RTP 385 pellets used for printing.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 69.</span> RTP 385 pellets used for printing.</figcaption></figure>
   </div>
   <figure class="f"><div class="plate"><img src="assets/images/mould-3dp-printing.jpg" alt="Large-format pellet 3D printer extruding the first layers of an RTP 385 test print on a plywood bed"></div>
-    <figcaption><span class="fignum">Figure 67.</span> Large-format pellet printer laying the first layers of a test print in RTP 385.</figcaption></figure>
+    <figcaption><span class="fignum">Figure 70.</span> Large-format pellet printer laying the first layers of a test print in RTP 385.</figcaption></figure>
   <div class="pc sm"><div class="pro"><h5>Pros</h5><ul><li>Printed straight from CAD, with no full plug to machine</li><li>Only the material needed is printed, so less waste [5]</li><li>Shorter lead time for the tool [4][6]</li><li>Easy to reprint a section if the shape changes in later seasons</li></ul></div><div class="con"><h5>Cons</h5><ul><li>Polymer can deform in a long, hot cure; the cure must stay well below its 138 °C deflection temperature (Appendix I)</li><li>Printed surfaces need machining and sealing for finish and vacuum [4]</li><li>Sections must be bonded accurately</li><li>Expensive print material and long print time</li></ul></div></div>
   </div>
   </div>
 
   <h4>Decision</h4>
-  <div class="prose"><p>The carbon fibre mould scored highest on stiffness and accuracy, but its two-stage process makes it the slowest and most expensive. The 3D-printed mould gives the same one-piece shape without a plug, is quicker to produce and can be updated for future cars. We selected it, and manage its risks by bonding the sections carefully, machining the final surface, and keeping the cure temperature within the material's limit.</p></div>
+  <div class="prose"><p>The carbon fibre mould is stiffest and most accurate, but its two-stage process makes it the slowest and most expensive. The 3D-printed mould gives the same one-piece shape without a plug, is quicker and can be updated for future cars. We selected it, managing its risks through careful bonding, final machining and a cure temperature within the material's limit.</p></div>
 </section>
 
 <!-- ============ A6 ============ -->
@@ -980,7 +1021,7 @@ details.app[open]{padding-bottom:8px}
     <p>Four problems shaped the project this semester.</p>
     <ul class="tight">
       <li><b>Redesigning the monocoque.</b> R26e's shortcomings meant redesigning the monocoque around the shelf, relocated main hoop and narrower front, while still fitting every component (Section 2).</li>
-      <li><b>Harness panel below 30 kN.</b> The first R27e panel failed at 17.89 kN. Local 4T8UD reinforcement and extra potting raised it to 30.10 kN (4.1).</li>
+      <li><b>Harness panel below 30 kN.</b> The 2T4UD panel peaked at 14.15 kN and 17.89 kN. Local 4T8UD reinforcement and additional potting sustained 30.10 kN (4.1).</li>
       <li><b>Core supply.</b> Corex became too costly; testing showed the Huarui core matches it (4.2).</li>
       <li><b>Tooling.</b> Adapting the R26e mould was too complex and costly, so a 3D-printed mould was chosen (Section 6).</li>
     </ul>
@@ -989,17 +1030,22 @@ details.app[open]{padding-bottom:8px}
   <h3>7.3 Remaining work</h3>
   <div class="prose"><p>Semester 2 runs in four stages:</p></div>
   <ol class="pipe" aria-label="Semester 2 build stages">
-    <li><span class="n"></span><h5>Lay up the monocoque</h5><span class="d">Nov – Dec 2026</span><p>Finalise all mounting holes, calculate the local layup at each mounting point, and fix the layup schedule and potting compound sizes.</p></li>
-    <li><span class="n"></span><h5>Prepare for welding</h5><span class="d">Jan 2027</span><p>When the monocoque returns, notch the roll hoop tubes, set up the welding jig, lathe inserts for all holes, and machine the mounts and backing plates.</p></li>
-    <li><span class="n"></span><h5>Finish the roll hoops</h5><span class="d">Feb 2027</span><p>Fully weld the roll hoops and send them for powder coating.</p></li>
+    <li><span class="n"></span><h5>Lay up the monocoque</h5><span class="d">Nov – Dec 2026</span><p>Finalise all mounting holes, calculate the local layup at each mounting point, fix the layup schedule and potting sizes, and prepare the front roll hoop bonding jig.</p></li>
+    <li><span class="n"></span><h5>Prepare for welding</h5><span class="d">Jan 2027</span><p>When the monocoque returns, notch the main roll hoop tubes, set up the welding jig, lathe inserts for all holes, and machine the mounts and backing plates.</p></li>
+    <li><span class="n"></span><h5>Finish the main roll hoop</h5><span class="d">Feb 2027</span><p>Fully weld the main roll hoop and braces, then send them for powder coating.</p></li>
     <li><span class="n"></span><h5>Prove waterproofing</h5><span class="d">Feb 2027</span><p>Build a rain test rig and pass the rain test on the monocoque before competition.</p></li>
   </ol>
+  <h4>Future work: structural validation</h4>
+  <div class="prose"><ul class="tight">
+    <li>Perform updated ANSYS torsional rigidity and vertical deflection analyses on the revised laminate configuration, including the integrated shelf.</li>
+    <li>Conduct physical torsional rigidity testing next semester to validate the simulation results and quantify the effect of laminate reduction.</li>
+  </ul></div>
 
   <h3>7.4 Timeline</h3>
   <figure class="f chartfig">
   <div class="chart" id="ganttChart" role="img" aria-label="Timeline from November 2026 to February 2027: SES acceptance, layup preparation, monocoque laying, machining, receiving, inserts, welding, EE wiring, shakedown in February"></div>
-    <figcaption><span class="fignum">Figure 68.</span> Semester 2 build plan, approximate to the week. Dashed line: report date.</figcaption></figure>
-  <div class="prose"><p>SES acceptance comes first, because the final layup cannot be fixed until the judges accept it. The monocoque is the longest task: the roll hoops cannot be welded in place, or the wiring started, until it arrives.</p><p><b>Milestones:</b> SES accepted (end Nov) → monocoque received (end Dec) → roll hoops welded (early Feb) → rain test passed (mid Feb) → R27e shakedown (end Feb 2027).</p></div>
+    <figcaption><span class="fignum">Figure 71.</span> Semester 2 build plan, approximate to the week. Dashed line: report date.</figcaption></figure>
+  <div class="prose"><p>SES acceptance comes first, because the final layup cannot be fixed until the judges accept it. The monocoque is the longest task: the main roll hoop cannot be welded in place, or the wiring started, until it arrives.</p><p><b>Milestones:</b> SES accepted (end Nov) → monocoque received (end Dec) → main roll hoop welded (early Feb) → rain test passed (mid Feb) → R27e shakedown (end Feb 2027).</p></div>
 </section>
 
 <!-- ============ Contributions ============ -->
@@ -1103,22 +1149,22 @@ details.app[open]{padding-bottom:8px}
         <tr class="tot"><td>Total</td><td class="n">2,446.34</td><td class="n">977.27</td></tr>
       </tbody></table></div>
     <div class="pair">
-      <figure class="f"><div class="plate"><img src="assets/images/shelf-waterproof-photos.jpg" alt="Four photos of R26e rear electronics under the shroud"></div><figcaption><span class="fignum">Figure 69.</span> R26e rear electronics under the shroud.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/shelf-ee-side.jpg" alt="Side render of the R27e rear bay with electronics on the shelf"></div><figcaption><span class="fignum">Figure 70.</span> R27e rear bay, side view.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/shelf-waterproof-photos.jpg" alt="Four photos of R26e rear electronics under the shroud"></div><figcaption><span class="fignum">Figure 72.</span> R26e rear electronics under the shroud.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/shelf-ee-side.jpg" alt="Side render of the R27e rear bay with electronics on the shelf"></div><figcaption><span class="fignum">Figure 73.</span> R27e rear bay, side view.</figcaption></figure>
     </div>
   </details>
 
   <details class="app"><summary>D. Mould options and additional figures</summary>
     <div class="pair">
-      <figure class="f"><div class="plate"><img src="assets/images/mould-old.jpg" alt="Existing R26e carbon mould halves"></div><figcaption><span class="fignum">Figure 71.</span> Option 1: existing R26e mould.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/mould-cf.jpg" alt="PU plug CAD and carbon mould"></div><figcaption><span class="fignum">Figure 72.</span> Option 2: PU plug and carbon mould.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/mrh-mount-lower.jpg" alt="Lower main hoop clamp mount on the monocoque wall"></div><figcaption><span class="fignum">Figure 73.</span> Lower main hoop clamp mount.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/mould-old.jpg" alt="Existing R26e carbon mould halves"></div><figcaption><span class="fignum">Figure 74.</span> Option 1: existing R26e mould.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/mould-cf.jpg" alt="PU plug CAD and carbon mould"></div><figcaption><span class="fignum">Figure 75.</span> Option 2: PU plug and carbon mould.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/mrh-mount-lower.jpg" alt="Lower main hoop clamp mount on the monocoque wall"></div><figcaption><span class="fignum">Figure 76.</span> Lower main hoop clamp mount.</figcaption></figure>
     </div>
   </details>
 
   <details class="app"><summary>E. Honeycomb core load–stroke curves</summary>
     <figure class="f"><div class="plate"><img src="assets/images/core-comparison-curves.png" alt="Six load against stroke plots comparing Huarui and Corex cores in punch shear and three-point bending for 2T1UD, 2T2UD and 2T4UD layups"></div>
-      <figcaption><span class="fignum">Figure 74.</span> Load against machine stroke for each core, test and layup. Top: punch shear. Bottom: three-point bending (no matched alternative-core result for 2T2UD).</figcaption></figure>
+      <figcaption><span class="fignum">Figure 77.</span> Load against machine stroke for each core, test and layup. Top: punch shear. Bottom: three-point bending (no matched alternative-core result for 2T2UD).</figcaption></figure>
   </details>
 
   <details class="app"><summary>F. Secondary bonding test requirements (SES judges, FSAE 2027)</summary>
@@ -1151,34 +1197,33 @@ details.app[open]{padding-bottom:8px}
     </table></div>
     <p class="cap" style="margin-top:0">Strength values from the supplier data sheet at 23 °C, for reference only.</p>
     <div class="trio">
-      <figure class="f"><div class="plate"><img src="assets/images/huarui-spec-1.jpg" alt="Huarui aluminium honeycomb data sheet, page 1"></div><figcaption><span class="fignum">Figure 75.</span> Data sheet, page 1.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/huarui-spec-2.jpg" alt="Huarui aluminium honeycomb data sheet, page 2"></div><figcaption><span class="fignum">Figure 76.</span> Page 2.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/huarui-spec-3.jpg" alt="Huarui aluminium honeycomb data sheet, page 3"></div><figcaption><span class="fignum">Figure 77.</span> Page 3.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/huarui-spec-1.jpg" alt="Huarui aluminium honeycomb data sheet, page 1"></div><figcaption><span class="fignum">Figure 78.</span> Data sheet, page 1.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/huarui-spec-2.jpg" alt="Huarui aluminium honeycomb data sheet, page 2"></div><figcaption><span class="fignum">Figure 79.</span> Page 2.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/huarui-spec-3.jpg" alt="Huarui aluminium honeycomb data sheet, page 3"></div><figcaption><span class="fignum">Figure 80.</span> Page 3.</figcaption></figure>
     </div>
     <p><a href="assets/docs/huarui-honeycomb-datasheet.pdf" target="_blank" rel="noopener">Open the full data sheet (PDF)</a></p>
   </details>
 
   <details class="app"><summary>H. SES submission</summary>
     <figure class="f"><div class="plate"><img src="assets/images/ses-submission.jpg" alt="Formula SAE portal showing the R27 SES uploaded on 30 Oct 2026 with status Commented, due 11 Jan 2027"></div>
-      <figcaption><span class="fignum">Figure 78.</span> R27 SES on the FSAE portal: submitted 30 Oct 2026, status "Commented", final due 11 Jan 2027.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 81.</span> R27 SES on the FSAE portal: submitted 30 Oct 2026, status "Commented", final due 11 Jan 2027.</figcaption></figure>
   </details>
 
   <details class="app"><summary>I. RTP 385 data sheet</summary>
     <figure class="f"><div class="plate"><img src="assets/images/rtp385-datasheet.jpg" alt="RTP 385 product data sheet listing mechanical and thermal properties"></div>
-      <figcaption><span class="fignum">Figure 79.</span> RTP 385 (polycarbonate, 30% carbon fibre): tensile strength 159 MPa, flexural modulus 15.9 GPa, deflection temperature 138 °C.</figcaption></figure>
+      <figcaption><span class="fignum">Figure 82.</span> RTP 385 (polycarbonate, 30% carbon fibre): tensile strength 159 MPa, flexural modulus 15.9 GPa, deflection temperature 138 °C.</figcaption></figure>
   </details>
 
   <details class="app"><summary>J. Additional figures</summary>
     <div class="pair">
-      <figure class="f"><div class="plate"><img src="assets/images/r27e-frame-render2.jpg" alt="Render of the R27e monocoque with main roll hoop, seat, harness and driver template"></div><figcaption><span class="fignum">Figure 80.</span> R27e frame with seat, harness and driver template.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/utm-setup.jpg" alt="The old circular fixture mounted on the Shimadzu universal testing machine"></div><figcaption><span class="fignum">Figure 81.</span> Old jig available on the Shimadzu UTM.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/panels-cured.jpg" alt="Cured sandwich test panels labelled by layup on an aluminium tool plate"></div><figcaption><span class="fignum">Figure 82.</span> Cured test panels, labelled by layup.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/frh-bend-drawing.jpg" alt="Bending drawing for the R27e front roll hoop, 4130 steel 1 inch by 0.095 inch tube"></div><figcaption><span class="fignum">Figure 83.</span> Front roll hoop bending drawing sent to VR3.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/vr3-bend-chart.jpg" alt="VR3 tube bending chart listing bend radii, minimum straight lengths and end leg lengths for FSAE tube sizes"></div><figcaption><span class="fignum">Figure 84.</span> VR3 bend die chart for FSAE tube sizes (Dec 2025).</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/welding-jig-mrh.jpg" alt="Welding jig fixtures holding the main roll hoop and braces"></div><figcaption><span class="fignum">Figure 85.</span> Fixtures holding the main hoop and braces.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/test1-front.jpg" alt="Test 1 front view: harness webbing gripped in the UTM belt grip above the panel"></div><figcaption><span class="fignum">Figure 86.</span> Test 1: belt grip.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/core-specimens.jpg" alt="Cured sandwich specimens labelled 2T1UD, 2T2UD, 2T4UD and 4T on an aluminium tool plate"></div><figcaption><span class="fignum">Figure 87.</span> Cured core specimens, labelled by layup.</figcaption></figure>
-      <figure class="f"><div class="plate"><img src="assets/images/harness-end-fitting.png" alt="Line drawing of the harness end fitting 01327 with bolt and washer"></div><figcaption><span class="fignum">Figure 88.</span> Harness end fitting (01327) with its bolt and backing washer.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/r27e-frame-render2.jpg" alt="Render of the R27e monocoque with main roll hoop, seat, harness and driver template"></div><figcaption><span class="fignum">Figure 83.</span> R27e frame with seat, harness and driver template.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/utm-setup.jpg" alt="The old circular fixture mounted on the Shimadzu universal testing machine"></div><figcaption><span class="fignum">Figure 84.</span> Old jig available on the Shimadzu UTM.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/panels-cured.jpg" alt="Cured sandwich test panels labelled by layup on an aluminium tool plate"></div><figcaption><span class="fignum">Figure 85.</span> Cured test panels, labelled by layup.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/frh-bend-drawing.jpg" alt="Bending drawing for the R27e front roll hoop, 4130 steel 1 inch by 0.095 inch tube"></div><figcaption><span class="fignum">Figure 86.</span> Front roll hoop bending drawing sent to VR3.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/vr3-bend-chart.jpg" alt="VR3 tube bending chart listing bend radii, minimum straight lengths and end leg lengths for FSAE tube sizes"></div><figcaption><span class="fignum">Figure 87.</span> VR3 bend die chart for FSAE tube sizes (Dec 2025).</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/welding-jig-mrh.jpg" alt="Welding jig fixtures holding the main roll hoop and braces"></div><figcaption><span class="fignum">Figure 88.</span> Fixtures holding the main hoop and braces.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/core-specimens.jpg" alt="Cured sandwich specimens labelled 2T1UD, 2T2UD, 2T4UD and 4T on an aluminium tool plate"></div><figcaption><span class="fignum">Figure 89.</span> Cured core specimens, labelled by layup.</figcaption></figure>
+      <figure class="f"><div class="plate"><img src="assets/images/harness-end-fitting.png" alt="Line drawing of the harness end fitting 01327 with bolt and washer"></div><figcaption><span class="fignum">Figure 90.</span> Harness end fitting (01327) with its bolt and backing washer.</figcaption></figure>
     </div>
   </details>
 </section>
@@ -1208,46 +1253,56 @@ const PULL={"t1":[[0.0,0.0],[0.12,0.248],[0.12,0.249],[0.24,0.527],[0.24,0.528],
   /* ---------- Pull test curves ---------- */
   (function(){
     const series=[
-      {k:'t1',n:'Test 1 · 2T4UD, loose clamp',c:'var(--series-up)'},
-      {k:'t2',n:'Test 2 · 2T4UD, tight clamp + eyebolt',c:'var(--series-ee)'},
-      {k:'t3',n:'Test 3 · 4T8UD + potting',c:'var(--accent)'}];
-    const W=720,H=360,L=52,R=24,T=18,B=46,xmax=76,ymax=32;
-    const svg=el('svg',{viewBox:`0 0 ${W} ${H}`},document.getElementById('pullChart'));
-    const X=v=>L+(W-L-R)*v/xmax, Y=v=>T+(H-T-B)*(1-v/ymax);
-    for(let g=0;g<=30;g+=5){el('line',{x1:L,x2:W-R,y1:Y(g),y2:Y(g),stroke:'var(--rule-2)'},svg);txt(g,{x:L-8,y:Y(g)+4,'text-anchor':'end'},svg)}
-    for(let g=0;g<=70;g+=10){txt(g,{x:X(g),y:H-B+18,'text-anchor':'middle'},svg)}
-    txt('Machine stroke (mm)',{x:(L+W-R)/2,y:H-6,'text-anchor':'middle'},svg);
-    txt('Force (kN)',{x:14,y:(H-B+T)/2,transform:`rotate(-90 14 ${(H-B+T)/2})`,'text-anchor':'middle'},svg);
-    el('line',{x1:L,x2:W-R,y1:Y(30),y2:Y(30),stroke:'var(--ink)','stroke-width':1.25,'stroke-dasharray':'6 4'},svg);
-    txt('30 kN requirement',{x:L+6,y:Y(30)-6,'font-weight':600},svg).style.fill='var(--ink)';
-    el('line',{x1:L,x2:W-R,y1:Y(0),y2:Y(0),stroke:'var(--ink-3)'},svg);
-    const peaks={};
-    series.forEach(s=>{
-      const d=PULL[s.k];
-      el('path',{d:'M'+d.map(p=>X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join('L'),fill:'none',stroke:s.c,'stroke-width':2,'stroke-linejoin':'round'},svg);
-      peaks[s.k]=d.reduce((m,p)=>p[1]>m[1]?p:m,d[0]);
-    });
-    const lab=[['t1',`14.15 kN`,0,-12],['t2',`17.89 kN`,8,-10],['t3',`30.10 kN`,-8,-10]];
-    lab.forEach(([k,t,dx,dy])=>{const p=peaks[k],s=series.find(z=>z.k===k);
-      el('circle',{cx:X(p[0]),cy:Y(p[1]),r:4.5,fill:s.c,stroke:'var(--bg)','stroke-width':2},svg);
-      const e=txt(t,{x:X(p[0])+dx,y:Y(p[1])+dy,'text-anchor':k==='t3'?'end':'start','font-weight':600},svg);e.style.fill='var(--ink)'});
-    const an=txt('Sudden drop 24.6 → 12.6 kN',{x:X(9.4),y:Y(6.2),'font-size':11.5},svg);an.style.fill='var(--ink-2)';
-    el('line',{x1:X(9.2),x2:X(7.1),y1:Y(6.9),y2:Y(12.2),stroke:'var(--ink-3)'},svg);
-    // hover crosshair
-    const cross=el('line',{y1:T,y2:H-B,stroke:'var(--ink-3)','stroke-dasharray':'2 3',opacity:0},svg);
-    const dots=series.map(s=>el('circle',{r:4,fill:s.c,stroke:'var(--bg)','stroke-width':2,opacity:0},svg));
-    const hit=el('rect',{x:L,y:T,width:W-L-R,height:H-T-B,fill:'transparent'},svg);
-    const near=(d,x)=>{let lo=0,hi=d.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(d[m][0]<x)lo=m;else hi=m}return Math.abs(d[lo][0]-x)<Math.abs(d[hi][0]-x)?d[lo]:d[hi]};
-    hit.addEventListener('pointermove',e=>{
-      const r=svg.getBoundingClientRect(),sx=(e.clientX-r.left)*W/r.width,x=(sx-L)/(W-L-R)*xmax;
-      if(x<0||x>xmax)return;
-      cross.setAttribute('x1',X(x));cross.setAttribute('x2',X(x));cross.setAttribute('opacity',1);
-      let html=`<b>Stroke ${x.toFixed(1)} mm</b>`;
-      series.forEach((s,i)=>{const d=PULL[s.k];const last=d[d.length-1][0];
-        if(x<=last+0.3){const p=near(d,x);dots[i].setAttribute('cx',X(p[0]));dots[i].setAttribute('cy',Y(p[1]));dots[i].setAttribute('opacity',1);html+=`<br>${s.n.split(' · ')[0]}: ${p[1].toFixed(2)} kN`}
-        else{dots[i].setAttribute('opacity',0);html+=`<br>${s.n.split(' · ')[0]}: test ended`}});
-      showTip(e,html)});
-    hit.addEventListener('pointerleave',()=>{cross.setAttribute('opacity',0);dots.forEach(d=>d.setAttribute('opacity',0));hideTip()});
+      {k:'t1',n:'Test 1',c:'var(--series-up)',peak:'14.15 kN'},
+      {k:'t2',n:'Test 2',c:'var(--series-ee)',peak:'17.89 kN'},
+      {k:'t3',n:'Test 3',c:'var(--accent)',peak:'30.10 kN'}];
+    const draw=(id,keys,small)=>{
+      const host=document.getElementById(id);if(!host)return;
+      const sel=series.filter(s=>keys.includes(s.k));
+      const W=720,H=small?300:360,L=52,R=24,T=18,B=46,ymax=32;
+      const xmax=small?Math.ceil((Math.max(...sel.map(s=>PULL[s.k][PULL[s.k].length-1][0]))+4)/10)*10:76;
+      const svg=el('svg',{viewBox:`0 0 ${W} ${H}`},host);
+      const X=v=>L+(W-L-R)*v/xmax, Y=v=>T+(H-T-B)*(1-v/ymax);
+      for(let g=0;g<=30;g+=5){el('line',{x1:L,x2:W-R,y1:Y(g),y2:Y(g),stroke:'var(--rule-2)'},svg);txt(g,{x:L-8,y:Y(g)+4,'text-anchor':'end'},svg)}
+      const step=xmax>40?10:5;
+      for(let g=0;g<=xmax;g+=step){txt(g,{x:X(g),y:H-B+18,'text-anchor':'middle'},svg)}
+      txt('Machine stroke (mm)',{x:(L+W-R)/2,y:H-6,'text-anchor':'middle'},svg);
+      txt('Force (kN)',{x:14,y:(H-B+T)/2,transform:`rotate(-90 14 ${(H-B+T)/2})`,'text-anchor':'middle'},svg);
+      el('line',{x1:L,x2:W-R,y1:Y(30),y2:Y(30),stroke:'var(--ink)','stroke-width':1.25,'stroke-dasharray':'6 4'},svg);
+      txt('30 kN requirement',{x:L+6,y:Y(30)-6,'font-weight':600},svg).style.fill='var(--ink)';
+      el('line',{x1:L,x2:W-R,y1:Y(0),y2:Y(0),stroke:'var(--ink-3)'},svg);
+      sel.forEach(s=>{
+        const d=PULL[s.k];
+        el('path',{d:'M'+d.map(p=>X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join('L'),fill:'none',stroke:s.c,'stroke-width':2,'stroke-linejoin':'round'},svg);
+        const p=d.reduce((m,q)=>q[1]>m[1]?q:m,d[0]);
+        el('circle',{cx:X(p[0]),cy:Y(p[1]),r:4.5,fill:s.c,stroke:'var(--bg)','stroke-width':2},svg);
+        const right=X(p[0])>W*0.6;
+        const lab=txt(s.peak+(s.k==='t3'?' (stopped)':''),{x:X(p[0])+(right?-8:8),y:Y(p[1])-10,'text-anchor':right?'end':'start','font-weight':600},svg);lab.style.fill='var(--ink)';
+      });
+      if(keys.includes('t3')){
+        const an=txt('Sudden drop 24.6 → 12.6 kN',{x:X(9.4),y:Y(6.2),'font-size':11.5},svg);an.style.fill='var(--ink-2)';
+        el('line',{x1:X(9.2),x2:X(7.1),y1:Y(6.9),y2:Y(12.2),stroke:'var(--ink-3)'},svg);
+      }
+      if(keys.length===1&&keys[0]==='t1'){
+        const an=txt('12–13 kN plateau',{x:X(22),y:Y(8.5),'font-size':11.5},svg);an.style.fill='var(--ink-2)';
+      }
+      const cross=el('line',{y1:T,y2:H-B,stroke:'var(--ink-3)','stroke-dasharray':'2 3',opacity:0},svg);
+      const dots=sel.map(s=>el('circle',{r:4,fill:s.c,stroke:'var(--bg)','stroke-width':2,opacity:0},svg));
+      const hit=el('rect',{x:L,y:T,width:W-L-R,height:H-T-B,fill:'transparent'},svg);
+      const near=(d,x)=>{let lo=0,hi=d.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(d[m][0]<x)lo=m;else hi=m}return Math.abs(d[lo][0]-x)<Math.abs(d[hi][0]-x)?d[lo]:d[hi]};
+      hit.addEventListener('pointermove',e=>{
+        const r=svg.getBoundingClientRect(),sx=(e.clientX-r.left)*W/r.width,x=(sx-L)/(W-L-R)*xmax;
+        if(x<0||x>xmax)return;
+        cross.setAttribute('x1',X(x));cross.setAttribute('x2',X(x));cross.setAttribute('opacity',1);
+        let html=`<b>Stroke ${x.toFixed(1)} mm</b>`;
+        sel.forEach((s,i)=>{const d=PULL[s.k];const last=d[d.length-1][0];
+          if(x<=last+0.3){const p=near(d,x);dots[i].setAttribute('cx',X(p[0]));dots[i].setAttribute('cy',Y(p[1]));dots[i].setAttribute('opacity',1);html+=`<br>${s.n}: ${p[1].toFixed(2)} kN`}
+          else{dots[i].setAttribute('opacity',0);html+=`<br>${s.n}: test ended`}});
+        showTip(e,html)});
+      hit.addEventListener('pointerleave',()=>{cross.setAttribute('opacity',0);dots.forEach(d=>d.setAttribute('opacity',0));hideTip()});
+    };
+    draw('pt1',['t1'],true);draw('pt2',['t2'],true);draw('pt3',['t3'],true);
+    draw('pullChart',['t1','t2','t3'],false);
   })();
 
   /* ---------- Core comparison ---------- */
@@ -1329,7 +1384,7 @@ const PULL={"t1":[[0.0,0.0],[0.12,0.248],[0.12,0.249],[0.24,0.527],[0.24,0.528],
       ['Monocoque machining and drilling','2026-12-05','2026-12-31'],
       ['Monocoque receiving','2026-12-14','2026-12-31'],
       ['Inserts lathing','2026-12-22','2026-12-31'],
-      ['Roll hoop welding','2027-02-01','2027-02-07'],
+      ['Main roll hoop welding','2027-02-01','2027-02-07'],
       ['Powder coating','2027-02-08','2027-02-14'],
       ['Rain test rig build','2027-02-01','2027-02-14'],
       ['Monocoque rain test','2027-02-15','2027-02-21'],
@@ -1356,11 +1411,21 @@ const PULL={"t1":[[0.0,0.0],[0.12,0.248],[0.12,0.249],[0.24,0.527],[0.24,0.528],
     txt('Report date',{x:x(now)+4,y:H-B-4,'font-size':11},svg);
   })();
 
-  /* ---------- 3D viewers (three.js r128, binary glTF) ---------- */
+  /* ---------- 3D viewers (three.js; models shipped as base64 text) ---------- */
   (function(){
     const boxes=[...document.querySelectorAll('.viewer3d')];
     if(!boxes.length)return;
     const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* download with progress (bytes received / content-length) */
+    const fetchBytes=(u,onp)=>fetch(u).then(r=>{
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      const total=+r.headers.get('content-length')||0;
+      if(!r.body||!r.body.getReader)return r.arrayBuffer().then(b=>new Uint8Array(b));
+      const rd=r.body.getReader(),chunks=[];let n=0;
+      const pump=()=>rd.read().then(({done,value})=>{
+        if(done){const out=new Uint8Array(n);let o=0;chunks.forEach(c=>{out.set(c,o);o+=c.length});return out}
+        chunks.push(value);n+=value.length;onp(n,total);return pump()});
+      return pump()});
 
     const fail=(box,msg)=>{const st=box.querySelector('.mv-status');st.textContent=msg;st.hidden=false;const go=box.querySelector('.mv-go');if(go)go.hidden=true};
     function start(box){
@@ -1389,23 +1454,41 @@ const PULL={"t1":[[0.0,0.0],[0.12,0.248],[0.12,0.249],[0.24,0.527],[0.24,0.528],
       if('IntersectionObserver' in window)new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe(box);
       const loop=()=>{requestAnimationFrame(loop);if(!visible)return;controls.update();renderer.render(scene,camera)};
       st.textContent='Loading 3D model…';
-      fetch(box.dataset.src).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);st.textContent='Preparing model…';return r.arrayBuffer()})
-      .then(ab=>{const buf=new Uint8Array(ab);
+      const urls=(box.dataset.src||box.dataset.parts).split(','), isTxt=!box.dataset.src;
+      const got=urls.map(()=>0), tot=urls.map(()=>0);
+      const upd=()=>{const T=tot.reduce((a,b)=>a+b,0),G=got.reduce((a,b)=>a+b,0);
+        st.textContent=T?`Loading 3D model… ${Math.min(99,Math.round(G/T*100))}%`:`Loading 3D model… ${(G/1048576).toFixed(1)} MB`};
+      const watchdog=setTimeout(()=>{if(!st.hidden)fail(box,'The 3D model is taking too long to load. Check the connection and reload the page.')},90000);
+      Promise.all(urls.map((u,i)=>fetchBytes(u,(g,t)=>{got[i]=g;tot[i]=t;upd()})))
+      .then(parts=>{
+        st.textContent='Preparing model…';
+        if(!isTxt)return parts[0].buffer.slice(parts[0].byteOffset,parts[0].byteOffset+parts[0].byteLength);
+        const dec=new TextDecoder(),bin=atob(parts.map(x=>dec.decode(x)).join('').replace(/\s/g,'')),raw=new Uint8Array(bin.length);
+        for(let i=0;i<bin.length;i++)raw[i]=bin.charCodeAt(i);
+        const gz=urls[0].endsWith('.gz.txt');
+        if(gz&&!('DecompressionStream' in window))throw new Error('no gzip');
+        return (gz?new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer():Promise.resolve(raw.buffer));
+      }).then(ab=>{
         const loader=new THREE.GLTFLoader();
+        if(THREE.MeshoptDecoder&&loader.setMeshoptDecoder)loader.setMeshoptDecoder(THREE.MeshoptDecoder);
         const cib=window.createImageBitmap; try{window.createImageBitmap=undefined}catch(e){}
-        loader.parse(buf.buffer,'',gltf=>{
-          const root=gltf.scene;
-          root.traverse(o=>{if(o.isCamera&&o.parent)o.parent.remove(o)});
-          const bb=new THREE.Box3().setFromObject(root),c=bb.getCenter(new THREE.Vector3()),sz=bb.getSize(new THREE.Vector3());
-          root.position.sub(c);scene.add(root);
-          const r=Math.max(sz.x,sz.y,sz.z),dist=r*1.55;
-          camera.near=r/100;camera.far=r*20;camera.updateProjectionMatrix();
-          camera.position.set(dist*0.75,dist*0.42,dist*0.85);controls.target.set(0,0,0);
-          controls.minDistance=r*0.4;controls.maxDistance=r*4;controls.update();
-          st.hidden=true; if(go)go.hidden=false; loop();
-        },err=>{fail(box,'The 3D model could not be read.');console.error(err)});
+        loader.parse(ab,'',gltf=>{
+          try{
+            const root=gltf.scene||(gltf.scenes&&gltf.scenes[0]);
+            if(!root)throw new Error('glTF has no scene');
+            /* collect first, then remove: removing during traverse skips or breaks children */
+            const cams=[];root.traverse(o=>{if(o.isCamera)cams.push(o)});cams.forEach(o=>{if(o.parent)o.parent.remove(o)});
+            const bb=new THREE.Box3().setFromObject(root),c=bb.getCenter(new THREE.Vector3()),sz=bb.getSize(new THREE.Vector3());
+            root.position.sub(c);scene.add(root);
+            const r=Math.max(sz.x,sz.y,sz.z),dist=r*1.55;
+            camera.near=r/100;camera.far=r*20;camera.updateProjectionMatrix();
+            camera.position.set(dist*0.75,dist*0.42,dist*0.85);controls.target.set(0,0,0);
+            controls.minDistance=r*0.4;controls.maxDistance=r*4;controls.update();
+            clearTimeout(watchdog); st.hidden=true; if(go)go.hidden=false; loop();
+          }catch(e){clearTimeout(watchdog);fail(box,'The 3D model could not be displayed.');console.error(e)}
+        },err=>{clearTimeout(watchdog);fail(box,'The 3D model could not be read.');console.error(err)});
         try{window.createImageBitmap=cib}catch(e){}
-      }).catch(e=>{fail(box,'The 3D model could not be downloaded.');console.error(e)});
+      }).catch(e=>{clearTimeout(watchdog);fail(box,'The 3D model could not be downloaded.');console.error(e)});
       if(go)go.addEventListener('click',()=>{controls.enabled=true;go.hidden=true;box.classList.add('live')});
     }
     const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){start(e.target);io.unobserve(e.target)}}),{rootMargin:'300px 0px'}):null;

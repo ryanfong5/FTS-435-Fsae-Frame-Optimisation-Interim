@@ -1,4 +1,4 @@
-# FTS-435 · Optimisation of the R27e FSAE Frame
+# FTS-435 : Design & Optimization of the Frame system for FSAE
 
 **CDE4301 Innovation & Design Capstone, interim report · NUS Formula SAE**
 
@@ -14,18 +14,18 @@ R26e was built to be light, but it failed the rain test and never ran the dynami
 |---|---|
 | Frame mass | **−2.44 kg** against R26e |
 | Overall car mass (frame, suspension and electronics) | **−6.08 kg** (−15.3 %) |
-| Shoulder harness pull test (4T8UD + potting) | **30.10 kN**, above the 30 kN requirement |
+| Shoulder harness pull test (4T8UD + potting) | Sustained **30.10 kN** (test stopped), meeting the 30 kN requirement |
 | Alternative honeycomb core (Huarui) | Matches Corex in punch shear; higher peak in three-point bending |
 
 ## Report contents
 
 1. **Problem and design specifications:** what went wrong on R26e and the R27e targets
 2. **Design changes:** front monocoque shrink, front roll hoop, integrated rear shelf, main roll hoop, laminate reductions
-3. **Fabrication:** pull-test jig, test panels and backing plates, roll hoop bending
-4. **Testing and results:** shoulder harness pull tests, honeycomb core comparison, simulation
+3. **Fabrication:** pull-test jig, test panels and backing plates, roll hoop bending and welding jig
+4. **Testing and results:** shoulder harness pull tests (Tests 1–3 and comparison), honeycomb core comparison, simulation
 5. **Mass results:** front, rear and overall mass bridge
 6. **Monocoque mould:** options considered and the 3D-printed RTP 385 mould
-7. **Problems and plan:** status, key challenges and the Semester 2 timeline
+7. **Problems and plan:** status, key challenges, Semester 2 plan, structural validation (future work) and timeline
 8. **Individual contributions**, references and appendices A–J
 
 The report includes interactive 3D models (frame, monocoque layup, integrated shelf and pull-test jig), test data charts and a pull-test time-lapse.
